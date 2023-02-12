@@ -49,11 +49,13 @@
 
             config = mkIf cfg.enable {
               systemd.services."hochreiner.rusthello" = {
+                description = "rust hello test service";
                 wantedBy = [ "multi-user.target" ];
 
                 serviceConfig = let pkg = self.packages.${system}.default;
                 in {
                   # Restart = "on-failure";
+                  Type = "oneshot";
                   ExecStart = "${pkg}/bin/rust-flake-test";
                   DynamicUser = "yes";
                   RuntimeDirectory = "hochreiner.rusthello";
@@ -62,6 +64,15 @@
                   StateDirectoryMode = "0700";
                   CacheDirectory = "hochreiner.rusthello";
                   CacheDirectoryMode = "0750";
+                };
+              };
+              systemd.timers."hochreiner.rusthello" = {
+                description = "timer for the rust hello test service";
+                wantedBy = [ "multi-user.target" ];
+                timerConfig = {
+                  OnBootSec="5min";
+                  OnUnitInactiveSec="5min";
+                  Unit="hochreiner.rusthello.service"
                 };
               };
             };
