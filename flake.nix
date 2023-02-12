@@ -39,7 +39,7 @@
           drv = rust-flake-test;
         };
 
-        nixosModule = { config, lib, pkgs, ... }:
+        nixosModule.default = { config, lib, pkgs, ... }:
           with lib;
           let cfg = config.hochreiner.services.rusthello;
           in {
