@@ -39,6 +39,34 @@
           drv = rust-flake-test;
         };
 
+        nixosModule = { config, lib, pkgs, ... }:
+          with lib;
+          let cfg = config.hochreiner.services.rusthello;
+          in {
+            options.hochreiner.services.rusthello = {
+              enable = mkEnableOption "Enables the rust hello service";
+            };
+
+            config = mkIf cfg.enable {
+              systemd.services."hochreiner.rusthello" = {
+                wantedBy = [ "multi-user.target" ];
+
+                serviceConfig = let pkg = self.packages.${system}.default;
+                in {
+                  # Restart = "on-failure";
+                  ExecStart = "${pkg}/bin/rust-flake-test";
+                  DynamicUser = "yes";
+                  RuntimeDirectory = "hochreiner.rusthello";
+                  RuntimeDirectoryMode = "0755";
+                  StateDirectory = "hochreiner.rusthello";
+                  StateDirectoryMode = "0700";
+                  CacheDirectory = "hochreiner.rusthello";
+                  CacheDirectoryMode = "0750";
+                };
+              };
+            };
+          };
+
         devShells.default = pkgs.mkShell {
           inputsFrom = builtins.attrValues self.checks;
 
