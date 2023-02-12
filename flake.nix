@@ -72,7 +72,7 @@
                 timerConfig = {
                   OnBootSec="5min";
                   OnUnitInactiveSec="5min";
-                  Unit="hochreiner.rusthello.service"
+                  Unit="hochreiner.rusthello.service";
                 };
               };
             };
