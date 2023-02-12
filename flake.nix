@@ -89,4 +89,13 @@
         };
       }
     );
+  
+  nixConfig = {
+    substituters = [
+      "https://hannes-hochreiner.cachix.org"
+    ];
+    trusted-public-keys = [
+      "hannes-hochreiner.cachix.org-1:+ljzSuDIM6I+FbA0mdBTSGHcKOcEZSECEtYIEcDA4Hg="
+    ];
+  };
 }
