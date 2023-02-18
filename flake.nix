@@ -2,7 +2,7 @@
   description = "Build a cargo project without extra checks";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
 
     crane = {
       url = "github:ipetkov/crane";
@@ -92,9 +92,11 @@
   
   nixConfig = {
     substituters = [
+      "https://cache.nixos.org"
       "https://hannes-hochreiner.cachix.org"
     ];
     trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "hannes-hochreiner.cachix.org-1:+ljzSuDIM6I+FbA0mdBTSGHcKOcEZSECEtYIEcDA4Hg="
     ];
   };
